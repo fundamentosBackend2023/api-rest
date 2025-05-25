@@ -1,0 +1,3 @@
+clientsDB = {}
+
+module.exports = clientsDB;

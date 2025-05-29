@@ -1,4 +1,4 @@
-# Nota: Actualizaré esto una vez que sepamos si el sábado 31 habrá o no actividades.
+# AVISO: No hay clase el sábado 31, nos vemos de manera presencial el sábado 7 de junio
 # Por favor, leer lo que está debajo
 
 ## Utilización del código

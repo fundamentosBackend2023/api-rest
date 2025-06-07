@@ -7,6 +7,11 @@ const { printErrorHandler, zodErrorHandler, boomErrorHandler,
         generalErrorHandler } = require('./utils/errorMiddlewares');
 const config = require('./config/config');
 const linkRoutes = require('./routes');
+const connectToMongo = require('./libs/mongo');
+
+(async () => {
+    await connectToMongo();
+})();
 
 app.use(express.json())
 app.use('/', rootMw);

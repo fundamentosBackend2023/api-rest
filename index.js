@@ -3,7 +3,7 @@ const app = express();
 
 const { globalMw, rootMw, routeMw,
         greetingMw, mwClosure } = require('./utils/generalMiddlewares');
-const { printErrorHandler, boomErrorHandler,
+const { printErrorHandler, zodErrorHandler, boomErrorHandler,
         generalErrorHandler } = require('./utils/errorMiddlewares');
 const config = require('./config/config');
 const linkRoutes = require('./routes');
@@ -37,6 +37,7 @@ app.get('/greeting/seasonal', (req, res) => {
 });
 
 app.use(printErrorHandler);
+app.use(zodErrorHandler);
 app.use(boomErrorHandler);
 app.use(generalErrorHandler);
 

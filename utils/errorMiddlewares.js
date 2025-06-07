@@ -1,6 +1,22 @@
+const { ZodError } = require('zod');
+
 const printErrorHandler = (error, req, res, next) => {
     console.log(error.stack);
     next(error);
+}
+
+const zodErrorHandler = (error, req, res, next) => {
+    if(error instanceof ZodError){
+        return res.status(400).json({
+            error: "Error de validación",
+            details: error.errors.map(e => ({
+                path: e.path.join('.'),
+                message: e.message
+            }))
+        });
+    }else{
+        next(error)
+    }
 }
 
 const boomErrorHandler = (error, req, res, next) => {
@@ -20,4 +36,5 @@ const generalErrorHandler = (error, req, res, next) => {
     })
 }
 
-module.exports = { printErrorHandler, boomErrorHandler, generalErrorHandler }
+module.exports = { printErrorHandler, boomErrorHandler,
+                    zodErrorHandler, generalErrorHandler }

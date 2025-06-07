@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Client = require('../services/clientServices');
-
+const validationMiddleware = require('./../utils/validationMw');
+const { clientSchema } = require('../utils/schemas');
 
 router.get('/', (req, res) => {
     let min = req.query.min;
@@ -33,7 +34,9 @@ router.get('/:id', (req, res) => {
 });
 
 
-router.post('/', (req, res) => {
+router.post('/',
+    validationMiddleware(clientSchema),
+    (req, res) => {
     const receivedClient = req.body;
     Client.createClient(receivedClient);
     res.status(201).json({

@@ -1,4 +1,5 @@
 const { ZodError } = require('zod');
+const mongoose = require('mongoose');
 
 const printErrorHandler = (error, req, res, next) => {
     console.log(error.stack);
@@ -29,6 +30,17 @@ const boomErrorHandler = (error, req, res, next) => {
     }
 }
 
+const mongooseErrorHandler = (err, req, res, next) => {
+    if(err instanceof mongoose.Error){
+        res.status(501).json({
+            type: 'Database error',
+            stack: err.stack
+        })
+    }else{
+        next(err)
+    }
+}
+
 const generalErrorHandler = (error, req, res, next) => {
     res.status(500).json({
         message: error.message,
@@ -37,4 +49,4 @@ const generalErrorHandler = (error, req, res, next) => {
 }
 
 module.exports = { printErrorHandler, boomErrorHandler,
-                    zodErrorHandler, generalErrorHandler }
+                    zodErrorHandler, mongooseErrorHandler, generalErrorHandler }
